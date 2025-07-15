@@ -6,27 +6,31 @@ import { FolderKanban } from 'lucide-react';
 interface DashboardStatCardProps {
   label: string;
   value: number | string;
-  helpText?: string;
+  delta?: string;
   icon?: React.ElementType;
 }
 
-export default function DashboardStatCard({ label, value, helpText, icon }: DashboardStatCardProps) {
+export default function DashboardStatCard({ label, value, delta, icon }: DashboardStatCardProps) {
   const IconComponent = icon || FolderKanban;
   return (
-    <Card.Root variant="outline" borderColor="gray.200" borderRadius="md" bg="white">
+    <Card.Root
+      variant="outline"
+      w="100%"
+      maxW="250px"
+    >
       <Card.Body p={4}>
-        <Flex align="center" justify="space-between">
+        <Flex align="center" justify="space-between" gap={2}>
           <Stat.Root>
-            <Stat.Label color="gray.600" fontSize="14px">{label}</Stat.Label>
-            <Stat.ValueText fontSize="20px" fontWeight="semibold">{value}</Stat.ValueText>
-            <Flex align="center" gap={1} mt={1}>
-              {helpText && (
-                <Stat.HelpText color="gray.600" fontSize="12px">{helpText}</Stat.HelpText>
+            <Stat.Label color="fg.muted" fontSize="sm">{label}</Stat.Label>
+            <Stat.ValueText fontSize="md" fontWeight="semibold">{value}</Stat.ValueText>
+            <Flex align="center" mt={1}>
+              {delta && (
+                <Stat.HelpText color="fg.muted" fontSize="xs">{delta}</Stat.HelpText>
               )}
-              <Text color="gray.400" fontSize="12px" ml={helpText ? 1 : 0}>vs last month</Text>
+              <Text color="fg.subtle" fontSize="xs" ml={delta ? 1 : 0}>vs last month</Text>
             </Flex>
           </Stat.Root>
-          <Icon as={IconComponent} boxSize={6} color="cyan.700" opacity={0.75} />
+          <Icon as={IconComponent} boxSize={6} color="teal.fg" opacity={0.75} />
         </Flex>
       </Card.Body>
     </Card.Root>
