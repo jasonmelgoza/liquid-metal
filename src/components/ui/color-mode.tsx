@@ -5,8 +5,7 @@ import { ClientOnly, IconButton, Skeleton, Span } from "@chakra-ui/react"
 import { ThemeProvider, useTheme } from "next-themes"
 import type { ThemeProviderProps } from "next-themes"
 import * as React from "react"
-import { Moon, Sun } from 'lucide-react';
-import { Tooltip } from '@/components/ui/tooltip'
+import { LuMoon, LuSun } from "react-icons/lu"
 
 export interface ColorModeProviderProps extends ThemeProviderProps {}
 
@@ -44,9 +43,7 @@ export function useColorModeValue<T>(light: T, dark: T) {
 
 export function ColorModeIcon() {
   const { colorMode } = useColorMode()
-  return colorMode === "dark"
-    ? <Moon size={16} strokeWidth={1.5} absoluteStrokeWidth />
-    : <Sun size={16} strokeWidth={1.5} absoluteStrokeWidth />
+  return colorMode === "dark" ? <LuMoon /> : <LuSun />
 }
 
 interface ColorModeButtonProps extends Omit<IconButtonProps, "aria-label"> {}
@@ -55,22 +52,25 @@ export const ColorModeButton = React.forwardRef<
   HTMLButtonElement,
   ColorModeButtonProps
 >(function ColorModeButton(props, ref) {
-  const { toggleColorMode, colorMode } = useColorMode()
-  const tooltipLabel = colorMode === "dark" ? "Switch to light" : "Switch to dark"
+  const { toggleColorMode } = useColorMode()
   return (
     <ClientOnly fallback={<Skeleton boxSize="8" />}>
-      <Tooltip content={tooltipLabel} openDelay={300}>
-        <IconButton
-          onClick={toggleColorMode}
-          variant="ghost"
-          aria-label="Toggle color mode"
-          size="sm"
-          ref={ref}
-          {...props}
-        >
-          <ColorModeIcon />
-        </IconButton>
-      </Tooltip>
+      <IconButton
+        onClick={toggleColorMode}
+        variant="ghost"
+        aria-label="Toggle color mode"
+        size="sm"
+        ref={ref}
+        {...props}
+        css={{
+          _icon: {
+            width: "5",
+            height: "5",
+          },
+        }}
+      >
+        <ColorModeIcon />
+      </IconButton>
     </ClientOnly>
   )
 })
