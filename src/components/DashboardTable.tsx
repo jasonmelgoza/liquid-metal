@@ -1,4 +1,4 @@
-import { Card, Badge, Text, Flex, Box, Button, Icon, Heading, Tabs } from '@chakra-ui/react';
+import { Card, Badge, Text, Flex, Box, Button, Icon, Heading, Tabs, Table } from '@chakra-ui/react';
 import { useState, useMemo } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { 
@@ -179,22 +179,19 @@ export default function DashboardTable() {
           <Tabs.Content value={activeTab}>
             {/* Table */}
             <Box overflowX="auto">
-              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                <thead style={{ backgroundColor: '#f7fafc' }}>
+              <Table.Root>
+                <Table.Header>
                   {table.getHeaderGroups().map(headerGroup => (
-                    <tr key={headerGroup.id}>
+                    <Table.Row key={headerGroup.id}>
                       {headerGroup.headers.map(header => (
-                        <th 
+                        <Table.ColumnHeader 
                           key={header.id}
-                          style={{ 
-                            padding: '16px', 
-                            textAlign: 'left', 
-                            fontSize: '14px', 
-                            fontWeight: '600', 
-                            color: '#2d3748', 
-                            borderBottom: '1px solid #e2e8f0',
-                            cursor: header.column.getCanSort() ? 'pointer' : 'default'
-                          }}
+                          px={4} 
+                          py={4} 
+                          fontSize="sm" 
+                          fontWeight="semibold" 
+                          color="gray.700"
+                          cursor={header.column.getCanSort() ? 'pointer' : 'default'}
                           onClick={header.column.getToggleSortingHandler()}
                         >
                           <Flex align="center" gap={1}>
@@ -209,26 +206,26 @@ export default function DashboardTable() {
                               </Box>
                             )}
                           </Flex>
-                        </th>
+                        </Table.ColumnHeader>
                       ))}
-                    </tr>
+                    </Table.Row>
                   ))}
-                </thead>
-                <tbody>
+                </Table.Header>
+                <Table.Body>
                   {table.getRowModel().rows.map(row => (
-                    <tr key={row.id} style={{ borderBottom: '1px solid #f7fafc' }}>
+                    <Table.Row key={row.id}>
                       {row.getVisibleCells().map(cell => (
-                        <td key={cell.id} style={{ padding: '12px 16px' }}>
+                        <Table.Cell key={cell.id} px={4} py={3}>
                           {flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext()
                           )}
-                        </td>
+                        </Table.Cell>
                       ))}
-                    </tr>
+                    </Table.Row>
                   ))}
-                </tbody>
-              </table>
+                </Table.Body>
+              </Table.Root>
             </Box>
             
             {/* Pagination */}
