@@ -79,9 +79,9 @@ export default function Layout() {
 
   const getPageTitle = () => {
     switch (location.pathname) {
-      case '/dashboard':
-        return 'Dashboard';
       case '/':
+        return 'Dashboard';
+      case '/projects':
         return 'Projects';
       case '/inbox':
         return 'Inbox';
@@ -96,7 +96,7 @@ export default function Layout() {
       case '/teams':
         return 'Teams';
       default:
-        return 'Projects';
+        return 'Dashboard';
     }
   };
   
@@ -166,14 +166,14 @@ export default function Layout() {
               <NavItem 
                 icon={LayoutDashboard} 
                 label="Dashboard" 
-                to="/dashboard"
-                isActive={location.pathname === '/dashboard'}
+                to="/"
+                isActive={location.pathname === '/'}
               />
               <NavItem 
                 icon={Folders} 
                 label="Projects" 
-                to="/"
-                isActive={location.pathname === '/'}
+                to="/projects"
+                isActive={location.pathname === '/projects'}
               />
               <NavItem 
                 icon={Inbox} 
