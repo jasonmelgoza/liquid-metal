@@ -118,7 +118,7 @@ export default function DashboardTable() {
       header: 'Assignee',
       cell: info => (
         <Flex align="center" gap={2}>
-          <Avatar.Root colorPalette={pickPalette(info.getValue())} size="sm">
+          <Avatar.Root colorPalette={pickPalette(info.getValue())} size="xs">
             <Avatar.Fallback name={info.getValue()} />
           </Avatar.Root>
           <Text fontSize="sm">{info.getValue()}</Text>
