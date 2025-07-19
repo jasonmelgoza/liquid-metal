@@ -1,4 +1,4 @@
-import { Card, Badge, Text, Flex, Box, Button, Icon, Heading, Tabs, Table } from '@chakra-ui/react';
+import { Card, Badge, Text, Flex, Box, Button, Icon, Heading, Tabs, Table, Avatar } from '@chakra-ui/react';
 import { useState, useMemo } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { 
@@ -40,6 +40,13 @@ const completedTasks: Task[] = [
 ];
 
 const ITEMS_PER_PAGE = 4;
+
+// Helper function for color randomization
+const colorPalette = ["red", "blue", "green", "yellow", "purple", "orange"];
+const pickPalette = (name: string) => {
+  const index = name.charCodeAt(0) % colorPalette.length;
+  return colorPalette[index];
+};
 
 export default function DashboardTable() {
   const [activeTab, setActiveTab] = useState<'upcoming' | 'overdue' | 'completed'>('upcoming');
@@ -111,20 +118,9 @@ export default function DashboardTable() {
       header: 'Assignee',
       cell: info => (
         <Flex align="center" gap={2}>
-          <Box
-            w="6"
-            h="6"
-            bg="blue.500"
-            color="white"
-            borderRadius="full"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            fontSize="xs"
-            fontWeight="medium"
-          >
-            {info.getValue().charAt(0)}
-          </Box>
+          <Avatar.Root colorPalette={pickPalette(info.getValue())} size="sm">
+            <Avatar.Fallback name={info.getValue()} />
+          </Avatar.Root>
           <Text fontSize="sm">{info.getValue()}</Text>
         </Flex>
       ),
