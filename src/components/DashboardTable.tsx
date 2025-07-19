@@ -80,7 +80,7 @@ export default function DashboardTable() {
     columnHelper.accessor('priority', {
       header: 'Priority',
       cell: info => (
-        <Badge colorScheme={getPriorityColor(info.getValue())} variant="subtle">
+        <Badge colorPalette={getPriorityColor(info.getValue())} variant="subtle">
           {info.getValue()}
         </Badge>
       ),
@@ -186,11 +186,6 @@ export default function DashboardTable() {
                       {headerGroup.headers.map(header => (
                         <Table.ColumnHeader 
                           key={header.id}
-                          px={4} 
-                          py={4} 
-                          fontSize="sm" 
-                          fontWeight="semibold" 
-                          color="gray.700"
                           cursor={header.column.getCanSort() ? 'pointer' : 'default'}
                           onClick={header.column.getToggleSortingHandler()}
                         >
@@ -215,7 +210,7 @@ export default function DashboardTable() {
                   {table.getRowModel().rows.map(row => (
                     <Table.Row key={row.id}>
                       {row.getVisibleCells().map(cell => (
-                        <Table.Cell key={cell.id} px={4} py={3}>
+                        <Table.Cell key={cell.id}>
                           {flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext()
