@@ -1,6 +1,6 @@
 import { Card, Badge, Text, Flex, Box, Button, Icon, Heading, Tabs, Table, Avatar } from '@chakra-ui/react';
 import { useState, useMemo } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Hourglass, Bell, SquareCheck } from 'lucide-react';
 import { 
   useReactTable, 
   getCoreRowModel, 
@@ -162,12 +162,21 @@ export default function DashboardTable() {
         }}>
           <Tabs.List>
             <Tabs.Trigger value="upcoming" px={4} py={2} fontSize="sm" fontWeight="medium">
+              <Icon>
+                <Hourglass size={16} strokeWidth={1.5} absoluteStrokeWidth />
+              </Icon>
               Upcoming ({upcomingTasks.length})
             </Tabs.Trigger>
             <Tabs.Trigger value="overdue" px={4} py={2} fontSize="sm" fontWeight="medium">
+              <Icon>
+                <Bell size={16} strokeWidth={1.5} absoluteStrokeWidth />
+              </Icon>
               Overdue ({overdueTasks.length})
             </Tabs.Trigger>
             <Tabs.Trigger value="completed" px={4} py={2} fontSize="sm" fontWeight="medium">
+              <Icon>
+                <SquareCheck size={16} strokeWidth={1.5} absoluteStrokeWidth />
+              </Icon>
               Completed ({completedTasks.length})
             </Tabs.Trigger>
           </Tabs.List>
