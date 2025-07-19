@@ -22,21 +22,21 @@ interface Task {
 
 // Separate data for each tab to avoid complex filtering
 const upcomingTasks: Task[] = [
-  { id: '1', name: 'Design System Updates', priority: 'High', progress: 25, dueDate: 'Dec 20, 2024', assignee: 'Alice' },
-  { id: '2', name: 'Mobile App Testing', priority: 'Medium', progress: 0, dueDate: 'Dec 25, 2024', assignee: 'Bob' },
-  { id: '3', name: 'Content Review', priority: 'Low', progress: 10, dueDate: 'Dec 30, 2024', assignee: 'Charlie' },
-  { id: '4', name: 'API Integration', priority: 'High', progress: 45, dueDate: 'Jan 5, 2025', assignee: 'David' },
+  { id: '1', name: 'Design System Updates', priority: 'High', progress: 25, dueDate: 'Dec 20, 2024', assignee: 'Cody Rhodes' },
+  { id: '2', name: 'Mobile App Testing', priority: 'Medium', progress: 0, dueDate: 'Dec 25, 2024', assignee: 'Roman Reigns' },
+  { id: '3', name: 'Content Review', priority: 'Low', progress: 10, dueDate: 'Dec 30, 2024', assignee: 'Seth Rollins' },
+  { id: '4', name: 'API Integration', priority: 'High', progress: 45, dueDate: 'Jan 5, 2025', assignee: 'Becky Lynch' },
 ];
 
 const overdueTasks: Task[] = [
-  { id: '5', name: 'Bug Fixes', priority: 'High', progress: 80, dueDate: 'Dec 10, 2024', assignee: 'Frank' },
-  { id: '6', name: 'Documentation', priority: 'Medium', progress: 60, dueDate: 'Dec 12, 2024', assignee: 'Grace' },
+  { id: '5', name: 'Bug Fixes', priority: 'High', progress: 80, dueDate: 'Dec 10, 2024', assignee: 'Rhea Ripley' },
+  { id: '6', name: 'Documentation', priority: 'Medium', progress: 60, dueDate: 'Dec 12, 2024', assignee: 'Gunther' },
 ];
 
 const completedTasks: Task[] = [
-  { id: '7', name: 'Website Launch', priority: 'High', progress: 100, dueDate: 'Dec 1, 2024', assignee: 'Henry' },
-  { id: '8', name: 'Security Audit', priority: 'High', progress: 100, dueDate: 'Nov 28, 2024', assignee: 'Ivy' },
-  { id: '9', name: 'Performance Optimization', priority: 'Medium', progress: 100, dueDate: 'Nov 25, 2024', assignee: 'Jack' },
+  { id: '7', name: 'Website Launch', priority: 'High', progress: 100, dueDate: 'Dec 1, 2024', assignee: 'LA Knight' },
+  { id: '8', name: 'Security Audit', priority: 'High', progress: 100, dueDate: 'Nov 28, 2024', assignee: 'Iyo Sky' },
+  { id: '9', name: 'Performance Optimization', priority: 'Medium', progress: 100, dueDate: 'Nov 25, 2024', assignee: 'Jey Uso' },
 ];
 
 const ITEMS_PER_PAGE = 4;
