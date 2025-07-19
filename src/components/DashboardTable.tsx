@@ -1,6 +1,15 @@
-import { Card, Badge, Text, Flex, Box, Button, Icon, Heading, Tabs, Table } from '@chakra-ui/react';
-import { useState } from 'react';
+import { Card, Badge, Text, Flex, Box, Button, Icon, Heading, Tabs } from '@chakra-ui/react';
+import { useState, useMemo } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { 
+  useReactTable, 
+  getCoreRowModel, 
+  getPaginationRowModel,
+  getSortedRowModel,
+  flexRender,
+  createColumnHelper,
+  SortingState
+} from '@tanstack/react-table';
 
 interface Task {
   id: string;
@@ -34,7 +43,7 @@ const ITEMS_PER_PAGE = 4;
 
 export default function DashboardTable() {
   const [activeTab, setActiveTab] = useState<'upcoming' | 'overdue' | 'completed'>('upcoming');
-  const [currentPage, setCurrentPage] = useState(1);
+  const [sorting, setSorting] = useState<SortingState>([]);
 
   // Get data based on active tab
   const getCurrentData = () => {
@@ -47,15 +56,6 @@ export default function DashboardTable() {
   };
 
   const currentData = getCurrentData();
-  const totalPages = Math.ceil(currentData.length / ITEMS_PER_PAGE);
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
-  const pageData = currentData.slice(startIndex, endIndex);
-
-  const handleTabChange = (tab: 'upcoming' | 'overdue' | 'completed') => {
-    setActiveTab(tab);
-    setCurrentPage(1);
-  };
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
@@ -64,6 +64,93 @@ export default function DashboardTable() {
       case 'Low': return 'green';
       default: return 'gray';
     }
+  };
+
+  // Create column helper
+  const columnHelper = createColumnHelper<Task>();
+
+  // Define columns
+  const columns = useMemo(() => [
+    columnHelper.accessor('name', {
+      header: 'Task Name',
+      cell: info => (
+        <Text fontWeight="medium">{info.getValue()}</Text>
+      ),
+    }),
+    columnHelper.accessor('priority', {
+      header: 'Priority',
+      cell: info => (
+        <Badge colorScheme={getPriorityColor(info.getValue())} variant="subtle">
+          {info.getValue()}
+        </Badge>
+      ),
+    }),
+    columnHelper.accessor('progress', {
+      header: 'Progress',
+      cell: info => (
+        <Flex align="center" gap={2}>
+          <Box w="100px" h="8px" bg="gray.200" borderRadius="full" overflow="hidden">
+            <Box 
+              h="full" 
+              bg="blue.500" 
+              w={`${info.getValue()}%`}
+              transition="width 0.3s ease"
+            />
+          </Box>
+          <Text fontSize="sm" color="gray.600">{info.getValue()}%</Text>
+        </Flex>
+      ),
+    }),
+    columnHelper.accessor('dueDate', {
+      header: 'Due Date',
+      cell: info => (
+        <Text fontSize="sm">{info.getValue()}</Text>
+      ),
+    }),
+    columnHelper.accessor('assignee', {
+      header: 'Assignee',
+      cell: info => (
+        <Flex align="center" gap={2}>
+          <Box
+            w="6"
+            h="6"
+            bg="blue.500"
+            color="white"
+            borderRadius="full"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            fontSize="xs"
+            fontWeight="medium"
+          >
+            {info.getValue().charAt(0)}
+          </Box>
+          <Text fontSize="sm">{info.getValue()}</Text>
+        </Flex>
+      ),
+    }),
+  ], []);
+
+  // Create table instance
+  const table = useReactTable({
+    data: currentData,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    onSortingChange: setSorting,
+    state: {
+      sorting,
+    },
+    initialState: {
+      pagination: { pageSize: ITEMS_PER_PAGE }
+    },
+  });
+
+  const handleTabChange = (tab: 'upcoming' | 'overdue' | 'completed') => {
+    setActiveTab(tab);
+    // Reset to first page when switching tabs
+    table.setPageIndex(0);
   };
 
   return (
@@ -92,90 +179,73 @@ export default function DashboardTable() {
           <Tabs.Content value={activeTab}>
             {/* Table */}
             <Box overflowX="auto">
-              <Table.Root>
-                <Table.Header>
-                  <Table.Row>
-                    <Table.ColumnHeader>
-                      Task Name
-                    </Table.ColumnHeader>
-                    <Table.ColumnHeader>
-                      Priority
-                    </Table.ColumnHeader>
-                    <Table.ColumnHeader>
-                      Progress
-                    </Table.ColumnHeader>
-                    <Table.ColumnHeader>
-                      Due Date
-                    </Table.ColumnHeader>
-                    <Table.ColumnHeader>
-                      Assignee
-                    </Table.ColumnHeader>
-                  </Table.Row>
-                </Table.Header>
-                <Table.Body>
-                  {pageData.map((task) => (
-                    <Table.Row key={task.id}>
-                      <Table.Cell px={4} py={3}>
-                        <Text fontWeight="medium">{task.name}</Text>
-                      </Table.Cell>
-                      <Table.Cell px={4} py={3}>
-                        <Badge colorScheme={getPriorityColor(task.priority)} variant="subtle">
-                          {task.priority}
-                        </Badge>
-                      </Table.Cell>
-                      <Table.Cell px={4} py={3}>
-                        <Flex align="center" gap={2}>
-                          <Box w="100px" h="8px" bg="gray.200" borderRadius="full" overflow="hidden">
-                            <Box 
-                              h="full" 
-                              bg="blue.500" 
-                              w={`${task.progress}%`}
-                              transition="width 0.3s ease"
-                            />
-                          </Box>
-                          <Text fontSize="sm" color="gray.600">{task.progress}%</Text>
-                        </Flex>
-                      </Table.Cell>
-                      <Table.Cell px={4} py={3}>
-                        <Text fontSize="sm">{task.dueDate}</Text>
-                      </Table.Cell>
-                      <Table.Cell px={4} py={3}>
-                        <Flex align="center" gap={2}>
-                          <Box
-                            w="6"
-                            h="6"
-                            bg="blue.500"
-                            color="white"
-                            borderRadius="full"
-                            display="flex"
-                            alignItems="center"
-                            justifyContent="center"
-                            fontSize="xs"
-                            fontWeight="medium"
-                          >
-                            {task.assignee.charAt(0)}
-                          </Box>
-                          <Text fontSize="sm">{task.assignee}</Text>
-                        </Flex>
-                      </Table.Cell>
-                    </Table.Row>
+              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <thead style={{ backgroundColor: '#f7fafc' }}>
+                  {table.getHeaderGroups().map(headerGroup => (
+                    <tr key={headerGroup.id}>
+                      {headerGroup.headers.map(header => (
+                        <th 
+                          key={header.id}
+                          style={{ 
+                            padding: '16px', 
+                            textAlign: 'left', 
+                            fontSize: '14px', 
+                            fontWeight: '600', 
+                            color: '#2d3748', 
+                            borderBottom: '1px solid #e2e8f0',
+                            cursor: header.column.getCanSort() ? 'pointer' : 'default'
+                          }}
+                          onClick={header.column.getToggleSortingHandler()}
+                        >
+                          <Flex align="center" gap={1}>
+                            {flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                            {header.column.getCanSort() && (
+                              <Box>
+                                {header.column.getIsSorted() === 'asc' && '↑'}
+                                {header.column.getIsSorted() === 'desc' && '↓'}
+                              </Box>
+                            )}
+                          </Flex>
+                        </th>
+                      ))}
+                    </tr>
                   ))}
-                </Table.Body>
-              </Table.Root>
+                </thead>
+                <tbody>
+                  {table.getRowModel().rows.map(row => (
+                    <tr key={row.id} style={{ borderBottom: '1px solid #f7fafc' }}>
+                      {row.getVisibleCells().map(cell => (
+                        <td key={cell.id} style={{ padding: '12px 16px' }}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </Box>
             
             {/* Pagination */}
-            {totalPages > 1 && (
+            {table.getPageCount() > 1 && (
               <Flex justify="space-between" align="center" px={6} py={4} borderTop="1px solid" borderColor="gray.200">
                 <Text fontSize="sm" color="gray.600">
-                  Showing {startIndex + 1}-{Math.min(endIndex, currentData.length)} of {currentData.length} tasks
+                  Showing {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1}-{Math.min(
+                    (table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize,
+                    table.getFilteredRowModel().rows.length
+                  )} of {table.getFilteredRowModel().rows.length} tasks
                 </Text>
                 <Flex gap={2}>
                   <Button
                     size="sm"
                     variant="outline"
-                    onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-                    disabled={currentPage === 1}
+                    onClick={() => table.previousPage()}
+                    disabled={!table.getCanPreviousPage()}
                   >
                     <Icon>
                       <ChevronLeft size={16} strokeWidth={1.5} absoluteStrokeWidth />
@@ -184,8 +254,8 @@ export default function DashboardTable() {
                   <Button
                     size="sm"
                     variant="outline"
-                    onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
-                    disabled={currentPage === totalPages}
+                    onClick={() => table.nextPage()}
+                    disabled={!table.getCanNextPage()}
                   >
                     <Icon>
                       <ChevronRight size={16} strokeWidth={1.5} absoluteStrokeWidth />

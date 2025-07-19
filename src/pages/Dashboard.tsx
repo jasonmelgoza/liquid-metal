@@ -8,7 +8,7 @@ export default function Dashboard() {
   return (
     <Box px={4}>
       <TitleBar firstName="Jason" tasksDue={4} tasksOverdue={2} upcomingDeadlines={8} />
-      <Flex gap={4} mt={8}>
+      <Flex gap={4} mt={2}>
         <DashboardStatCard label="Total Projects" value={15} delta="+5" icon={FolderOpen} />
         <DashboardStatCard label="Total Tasks" value={23} delta="+15" icon={Files} />
         <DashboardStatCard label="In Review" value={5} delta="+2" icon={BookOpen} />
