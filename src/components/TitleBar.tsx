@@ -36,7 +36,7 @@ export function TitleBar({
           <Icon as={Download} boxSize={4} mr={2} />
           Export
         </Button>
-        <Button colorPalette="teal" variant="solid" size="sm">
+        <Button colorPalette="brand" variant="solid" size="sm">
           <Icon as={Plus} boxSize={4} mr={2} />
           Create
         </Button>

@@ -30,7 +30,7 @@ export default function DashboardStatCard({ label, value, delta, icon }: Dashboa
               <Text color="fg.subtle" fontSize="xs" ml={delta ? 1 : 0}>vs last month</Text>
             </Flex>
           </Stat.Root>
-          <Icon as={IconComponent} boxSize={6} color="teal.fg" opacity={0.75} />
+          <Icon as={IconComponent} boxSize={6} color="brand.500" />
         </Flex>
       </Card.Body>
     </Card.Root>
