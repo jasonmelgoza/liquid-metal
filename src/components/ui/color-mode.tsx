@@ -56,7 +56,7 @@ export const ColorModeButton = React.forwardRef<
   ColorModeButtonProps
 >(function ColorModeButton(props, ref) {
   const { toggleColorMode, colorMode } = useColorMode()
-  const tooltipLabel = colorMode === "dark" ? "Switch to Light" : "Switch to Dark"
+  const tooltipLabel = colorMode === "dark" ? "Switch to light" : "Switch to dark"
   
   return (
     <ClientOnly fallback={<Skeleton boxSize="8" />}>

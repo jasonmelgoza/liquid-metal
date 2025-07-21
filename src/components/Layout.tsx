@@ -19,7 +19,7 @@ import {
   Plus, 
   MoreVertical, 
   PanelLeftClose,
-  Menu
+  PanelLeftOpen
 } from 'lucide-react';
 
 interface NavItemProps {
@@ -341,7 +341,7 @@ export default function Layout() {
                   onClick={() => setIsCollapsed(false)}
                 >
                   <Icon>
-                    <Menu size={16} strokeWidth={1.5} absoluteStrokeWidth />
+                    <PanelLeftOpen size={16} strokeWidth={1.5} absoluteStrokeWidth />
                   </Icon>
                 </IconButton>
               </Tooltip>
