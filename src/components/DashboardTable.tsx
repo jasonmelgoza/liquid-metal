@@ -187,7 +187,7 @@ export default function DashboardTable() {
               <Table.Root>
                 <Table.Header>
                   {table.getHeaderGroups().map(headerGroup => (
-                    <Table.Row key={headerGroup.id}>
+                    <Table.Row key={headerGroup.id} bgColor={{ base: "white", _dark: "bg.subtle" }}>
                       {headerGroup.headers.map(header => (
                         <Table.ColumnHeader 
                           key={header.id}
@@ -213,7 +213,7 @@ export default function DashboardTable() {
                 </Table.Header>
                 <Table.Body>
                   {table.getRowModel().rows.map(row => (
-                    <Table.Row key={row.id}>
+                    <Table.Row key={row.id} bgColor={{ base: "white", _dark: "bg.subtle" }}>
                       {row.getVisibleCells().map(cell => (
                         <Table.Cell key={cell.id}>
                           {flexRender(
