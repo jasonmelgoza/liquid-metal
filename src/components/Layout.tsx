@@ -1,4 +1,4 @@
-import { Box, Flex, VStack, Button, Input, InputGroup, Text, IconButton, Icon, Bleed } from '@chakra-ui/react';
+import { Avatar, Box, Flex, VStack, Button, Input, InputGroup, Text, IconButton, Icon, Bleed } from '@chakra-ui/react';
 import { Tooltip } from '@/components/ui/tooltip';
 import { Logo } from '@/components/logo';
 import { ColorModeButton } from '@/components/ui/color-mode';
@@ -273,21 +273,9 @@ export default function Layout() {
 
             {/* User Profile */}
             <Flex align="center" gap="2" w="full" h="16">
-              <Box
-                w="9"
-                h="9"
-                bg="cyan.200"
-                color="cyan.800"
-                borderRadius="full"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                fontSize="14px"
-                fontWeight="normal"
-                flexShrink={0}
-              >
-                JR
-              </Box>
+              <Avatar.Root size="sm" colorPalette={"color.brand"}>
+                <Avatar.Fallback name="Jamal Rivers" />
+              </Avatar.Root>
               <Box flex="1" overflow="hidden">
                 <Text 
                   fontSize="16px" 
