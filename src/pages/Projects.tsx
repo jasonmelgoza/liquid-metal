@@ -1,14 +1,12 @@
-import { Box, Heading, Text } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
+import { EmptyState } from '@/components/ui/empty-state';
+import { Icon } from '@chakra-ui/react';
+import { Folders } from 'lucide-react';
 
 export default function Projects() {
   return (
-    <Box p="8">
-      <Heading size="xl" mb="4">
-        Projects
-      </Heading>
-      <Text color="fg.muted">
-        Welcome to your dashboard. Here you can see an overview of your projects and activities.
-      </Text>
-    </Box>
+    <Flex flex="1" direction="column" align="center" justify="center" p="8">
+      <EmptyState icon={<Icon as={Folders} />} title="No projects found" description="You don't have any projects yet." />
+    </Flex>
   );
 }

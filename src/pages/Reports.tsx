@@ -1,14 +1,12 @@
-import { Box, Heading, Text } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
+import { EmptyState } from '@/components/ui/empty-state';
+import { Icon } from '@chakra-ui/react';
+import { FileSpreadsheet } from 'lucide-react';
 
 export default function Reports() {
   return (
-    <Box p="8">
-      <Heading size="xl" mb="4">
-        Reports
-      </Heading>
-      <Text color="fg.muted">
-        View analytics and reports for your projects. Generate custom reports here.
-      </Text>
-    </Box>
+    <Flex flex="1" direction="column" align="center" justify="center" p="8">
+      <EmptyState icon={<Icon as={FileSpreadsheet} />} title="No reports found" description="You don't have any reports yet." />
+    </Flex>
   );
 }

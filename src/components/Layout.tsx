@@ -329,7 +329,7 @@ export default function Layout() {
       </Box>
 
       {/* Main Content */}
-      <Box flex="1" bg="bg.subtle" overflow="auto">
+      <Box display="flex" flexDirection="column" w="full" bg="bg.subtle" overflow="auto">
         <Box display="flex" bg="bg" borderBottomWidth="1px" borderColor="border" h="20">
           <Flex align="center" gap="4" px="4.5" py="6">
             {isCollapsed && (
