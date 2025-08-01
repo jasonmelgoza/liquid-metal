@@ -1,19 +1,19 @@
 import { Flex, Box, Text, Button, Icon } from '@chakra-ui/react';
 import { Download, Plus } from 'lucide-react';
 
-interface TitleBarProps {
+interface DashboardTitleBarProps {
   firstName?: string;
   tasksDue?: number;
   tasksOverdue?: number;
   upcomingDeadlines?: number;
 }
 
-export function TitleBar({
+export function DashboardTitleBar({
   firstName = 'Jason',
   tasksDue = 4,
   tasksOverdue = 2,
   upcomingDeadlines = 8,
-}: TitleBarProps) {
+}: DashboardTitleBarProps) {
   return (
     <Flex align="center" justify="space-between" px={5} py={4} w="full">
       <Box>
@@ -45,4 +45,4 @@ export function TitleBar({
   );
 }
 
-export default TitleBar; 
+export default DashboardTitleBar; 
