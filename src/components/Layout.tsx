@@ -3,7 +3,7 @@ import { Tooltip } from '@/components/ui/tooltip';
 import Sidebar from '@/components/Sidebar';
 import { Outlet, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { PanelLeftOpen } from 'lucide-react';
+import { PanelLeftOpen, Share, MoreHorizontal } from 'lucide-react';
 
 
 
@@ -52,24 +52,53 @@ export default function Layout() {
       {/* Main Content */}
       <Box display="flex" flexDirection="column" w="full" bg="bg.subtle" overflow="auto">
         <Box display="flex" bg="bg" borderBottomWidth="1px" borderColor="border" h="20">
-          <Flex align="center" gap="4" px="4.5" py="6">
-            {isCollapsed && (
-              <Tooltip content="Open sidebar">
+          <Flex align="center" justify="space-between" px="4.5" py="6" w="full">
+            <Flex align="center" gap="4">
+              {isCollapsed && (
+                <Tooltip content="Open sidebar">
+                  <IconButton
+                    variant="ghost"
+                    size="sm"
+                    aria-label="Open sidebar"
+                    onClick={() => setIsCollapsed(false)}
+                  >
+                    <Icon>
+                      <PanelLeftOpen size={16} strokeWidth={1.5} absoluteStrokeWidth />
+                    </Icon>
+                  </IconButton>
+                </Tooltip>
+              )}
+              <Text fontSize="14px" fontWeight="normal" color="fg">
+                {getPageTitle()}
+              </Text>
+            </Flex>
+            
+            {/* Action Buttons */}
+            <Flex gap="1">
+              <Tooltip content="Share">
                 <IconButton
                   variant="ghost"
                   size="sm"
-                  aria-label="Open sidebar"
-                  onClick={() => setIsCollapsed(false)}
+                  aria-label="Share"
                 >
                   <Icon>
-                    <PanelLeftOpen size={16} strokeWidth={1.5} absoluteStrokeWidth />
+                    <Share size={16} strokeWidth={1.5} absoluteStrokeWidth />
                   </Icon>
                 </IconButton>
               </Tooltip>
-            )}
-            <Text fontSize="14px" fontWeight="normal" color="fg">
-              {getPageTitle()}
-            </Text>
+              
+              <Tooltip content="More options">
+                <IconButton
+                  variant="ghost"
+                  size="sm"
+                  aria-label="More options"
+                >
+                  <Icon>
+                    <MoreHorizontal size={16} strokeWidth={1.5} absoluteStrokeWidth />
+                  </Icon>
+                </IconButton>
+              </Tooltip>
+            </Flex>
           </Flex>
         </Box>
         <Outlet />
