@@ -136,7 +136,7 @@ export default function Projects() {
   }
 
   return (
-    <Box minH="100vh">
+    <Box flex="1" overflow="auto">
       {/* Main Content */}
       <Box py="4" px="0">
         {/* Search and Actions Bar */}

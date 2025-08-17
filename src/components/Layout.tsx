@@ -48,10 +48,9 @@ export default function Layout() {
         isCollapsed={isCollapsed}
         onToggleCollapse={() => setIsCollapsed(!isCollapsed)}
       />
-
-      {/* Main Content */}
-      <Box display="flex" flexDirection="column" w="full" bg="bg.subtle" overflow="auto">
-        <Box display="flex" borderBottomWidth="1px" borderColor="border" h="20">
+      <Flex direction="column" flex="1" bg="bg.subtle" h="100vh" minH="100vh">
+        {/* Top Bar */}
+        <Box borderBottomWidth="1px" borderColor="border" h="20">
           <Flex align="center" justify="space-between" px="4.5" py="6" w="full">
             <Flex align="center" gap="4">
               {isCollapsed && (
@@ -101,8 +100,11 @@ export default function Layout() {
             </Flex>
           </Flex>
         </Box>
-        <Outlet />
-      </Box>
+        {/* Main Content */}
+        <Box flex="1" overflow="auto">
+          <Outlet />
+        </Box>
+      </Flex>
     </Flex>
   );
 }
