@@ -196,7 +196,7 @@ export default function Projects() {
                         borderColor="border"
                         w={header.getSize()}
                         bg="transparent"
-                        _hover={{ bg: 'bg' }}
+                        _hover={{ bg: 'bg.muted' }}
                         transition="background-color 0.2s"
                         userSelect="none"
                       >
@@ -223,7 +223,7 @@ export default function Projects() {
                   <Table.Row 
                     key={row.id} 
                     bg="transparent"
-                    _hover={{ bg: 'bg' }}
+                    _hover={{ bg: 'bg.muted' }}
                     transition="background-color 0.2s"
                   >
                     {row.getVisibleCells().map(cell => (
