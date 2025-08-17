@@ -19,6 +19,7 @@ import {
 import { 
   Filter, 
   Table as TableIcon, 
+  Plus,
 } from 'lucide-react';
 import { EmptyState } from '@/components/ui/empty-state';
 import { Folders } from 'lucide-react';
@@ -143,7 +144,7 @@ export default function Projects() {
           direction={{ base: 'column', md: 'row' }}
           px={2}
           gap={2} 
-          mb={3}
+          mb={1}
           align={{ base: 'stretch', md: 'center' }}
           justify="space-between"
         >
@@ -188,12 +189,16 @@ export default function Projects() {
                         onClick={header.column.getToggleSortingHandler()}
                         py="3"
                         px="5"
-                        fontSize="sm"
+                        fontSize="xs"
                         fontWeight="semibold"
                         color="fg"
                         borderBottom="1px solid"
                         borderColor="border"
                         w={header.getSize()}
+                        bg="transparent"
+                        _hover={{ bg: 'bg' }}
+                        transition="background-color 0.2s"
+                        userSelect="none"
                       >
                         <Flex align="center" gap={1}>
                           {flexRender(
@@ -240,6 +245,27 @@ export default function Projects() {
                 ))}
               </Table.Body>
             </Table.Root>
+          </Box>
+
+          {/* Add Project Row */}
+          <Box>
+            <Flex
+              align="center"
+              py="3"
+              px="2"
+              gap="2"
+            >
+              <Button
+                variant="ghost"
+                size="xs"
+                color="fg.muted"
+              >
+                <Icon>
+                  <Plus size="16" strokeWidth={1.5} absoluteStrokeWidth />
+                </Icon>
+                New project
+              </Button>
+            </Flex>
           </Box>
 
           {/* Pagination */}
