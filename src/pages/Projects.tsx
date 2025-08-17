@@ -1,28 +1,20 @@
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
 import { 
   Flex, 
   Box, 
-  Text, 
   Button, 
   Icon, 
-  Table,
+  Text,
 } from '@chakra-ui/react';
 import { 
-  useReactTable, 
-  getCoreRowModel, 
-  getPaginationRowModel,
-  getSortedRowModel,
-  flexRender,
   createColumnHelper,
-  SortingState,
 } from '@tanstack/react-table';
 import { 
   Filter, 
   Table as TableIcon, 
-  Plus,
 } from 'lucide-react';
-import { EmptyState } from '@/components/ui/empty-state';
 import { Folders } from 'lucide-react';
+import { DataGrid } from '@/components/DataGrid';
 
 interface Project {
   id: string;
@@ -54,8 +46,6 @@ const getStatusColor = (status: string) => {
 };
 
 export default function Projects() {
-  const [sorting, setSorting] = useState<SortingState>([]);
-
   // Create column helper
   const columnHelper = createColumnHelper<Project>();
 
@@ -101,39 +91,10 @@ export default function Projects() {
     }),
   ], [columnHelper]);
 
-  // Filter data based on global search
-  const filteredData = useMemo(() => {
-    return projectsData;
-  }, []);
-
-  // Create table instance
-  const table = useReactTable({
-    data: filteredData,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    onSortingChange: setSorting,
-    state: {
-      sorting,
-    },
-    initialState: {
-      pagination: { pageSize: 10 }
-    },
-  });
-
-  // If no projects, show empty state
-  if (projectsData.length === 0) {
-    return (
-      <Flex flex="1" direction="column" align="center" justify="center" p="8">
-        <EmptyState 
-          icon={<Icon as={Folders} />} 
-          title="No projects found" 
-          description="You don't have any projects yet." 
-        />
-      </Flex>
-    );
-  }
+  const handleAddProject = () => {
+    // TODO: Implement add project functionality
+    console.log('Add project clicked');
+  };
 
   return (
     <Box flex="1" overflow="auto">
@@ -173,139 +134,20 @@ export default function Projects() {
           </Flex>
         </Flex>
 
-        {/* Projects Table */}
-        <Box
-          overflow="hidden"
-        >
-          <Box overflowX="auto">
-            <Table.Root>
-              <Table.Header>
-                {table.getHeaderGroups().map(headerGroup => (
-                  <Table.Row key={headerGroup.id} bg="transparent">
-                    {headerGroup.headers.map(header => (
-                      <Table.ColumnHeader 
-                        key={header.id}
-                        cursor={header.column.getCanSort() ? 'pointer' : 'default'}
-                        onClick={header.column.getToggleSortingHandler()}
-                        py="3"
-                        px="5"
-                        fontSize="xs"
-                        fontWeight="semibold"
-                        color="fg"
-                        borderBottom="1px solid"
-                        borderColor="border"
-                        w={header.getSize()}
-                        bg="transparent"
-                        _hover={{ bg: 'bg.muted' }}
-                        transition="background-color 0.2s"
-                        userSelect="none"
-                      >
-                        <Flex align="center" gap={1}>
-                          {flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                          {header.column.getCanSort() && (
-                            <Box>
-                              {header.column.getIsSorted() === 'asc' && '↑'}
-                              {header.column.getIsSorted() === 'desc' && '↓'}
-                            </Box>
-                          )}
-                        </Flex>
-                      </Table.ColumnHeader>
-                    ))}
-                  </Table.Row>
-                ))}
-              </Table.Header>
-              
-              <Table.Body>
-                {table.getRowModel().rows.map(row => (
-                  <Table.Row 
-                    key={row.id} 
-                    bg="transparent"
-                    _hover={{ bg: 'bg.muted' }}
-                    transition="background-color 0.2s"
-                  >
-                    {row.getVisibleCells().map(cell => (
-                      <Table.Cell 
-                        key={cell.id}
-                        py="3"
-                        px="5"
-                        borderBottom="1px solid"
-                        borderColor="border"
-                        w={cell.column.getSize()}
-                      >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </Table.Cell>
-                    ))}
-                  </Table.Row>
-                ))}
-              </Table.Body>
-            </Table.Root>
-          </Box>
-
-          {/* Add Project Row */}
-          <Box>
-            <Flex
-              align="center"
-              py="3"
-              px="2"
-              gap="2"
-            >
-              <Button
-                variant="ghost"
-                size="xs"
-                color="fg.muted"
-              >
-                <Icon>
-                  <Plus size="16" strokeWidth={1.5} absoluteStrokeWidth />
-                </Icon>
-                New project
-              </Button>
-            </Flex>
-          </Box>
-
-          {/* Pagination */}
-          {table.getPageCount() > 1 && (
-            <Flex 
-              justify="space-between" 
-              align="center" 
-              px="6" 
-              py="4" 
-              borderTop="1px solid" 
-              borderColor="border"
-            >
-              <Text fontSize="sm" color="gray.600">
-                Showing {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1}-{Math.min(
-                  (table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize,
-                  table.getFilteredRowModel().rows.length
-                )} of {table.getFilteredRowModel().rows.length} projects
-              </Text>
-              
-              <Flex gap={2}>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={() => table.previousPage()}
-                  disabled={!table.getCanPreviousPage()}
-                >
-                  Previous
-                </Button>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={() => table.nextPage()}
-                  disabled={!table.getCanNextPage()}
-                >
-                  Next
-                </Button>
-              </Flex>
-            </Flex>
-          )}
-        </Box>
+        {/* Projects DataGrid */}
+        <DataGrid
+          data={projectsData}
+          columns={columns}
+          emptyStateIcon={<Icon as={Folders} />}
+          emptyStateTitle="No projects found"
+          emptyStateDescription="You don't have any projects yet."
+          addItemLabel="New project"
+          onAddItem={handleAddProject}
+          showAddItemRow={true}
+          pageSize={10}
+          showPagination={true}
+          enableSorting={true}
+        />
       </Box>
     </Box>
   );
