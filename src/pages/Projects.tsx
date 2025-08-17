@@ -27,27 +27,27 @@ import { Folders } from 'lucide-react';
 interface Project {
   id: string;
   name: string;
-  status: 'Todo' | 'In Review' | 'In Progress' | 'Completed';
+  status: 'To Do' | 'In Progress' | 'In Review' | 'Completed';
   team: string;
   dueDate: string;
 }
 
 // Sample data based on the Figma design
 const projectsData: Project[] = [
-  { id: '1', name: 'Stellar Sphere', status: 'Todo', team: 'Design Systems', dueDate: 'Aug 30, 2025' },
-  { id: '2', name: 'Mark Omega', status: 'In Review', team: 'Platform', dueDate: 'Sep 14, 2025' },
-  { id: '3', name: 'Pax Aurora', status: 'In Review', team: 'Design System', dueDate: 'Sep 30, 2025' },
-  { id: '4', name: 'Cluster Prism', status: 'In Review', team: 'Platform', dueDate: 'Nov 21, 2025' },
-  { id: '5', name: 'War Mantle', status: 'In Review', team: 'Product', dueDate: '' },
-  { id: '6', name: 'Dark Saber', status: 'In Review', team: 'Product', dueDate: '' },
-  { id: '7', name: 'Stardust', status: 'In Review', team: 'Info Sec', dueDate: '' },
+  { id: '1', name: 'Stellar Sphere', status: 'In Progress', team: 'Design Systems', dueDate: 'Aug 30, 2025' },
+  { id: '2', name: 'Mark Omega', status: 'In Progress', team: 'Platform', dueDate: 'Sep 14, 2025' },
+  { id: '3', name: 'Pax Aurora', status: 'In Progress', team: 'Design System', dueDate: 'Sep 30, 2025' },
+  { id: '4', name: 'Cluster Prism', status: 'To Do', team: 'Platform', dueDate: 'Nov 21, 2025' },
+  { id: '5', name: 'War Mantle', status: 'To Do', team: 'Product', dueDate: '' },
+  { id: '6', name: 'Dark Saber', status: 'To Do', team: 'Product', dueDate: '' },
+  { id: '7', name: 'Stardust', status: 'To Do', team: 'Info Sec', dueDate: '' },
 ];
 
 const getStatusColor = (status: string) => {
   switch (status) {
-    case 'Todo': return 'blue';
+    case 'To Do': return 'orange';
+    case 'In Progress': return 'green';
     case 'In Review': return 'blue';
-    case 'In Progress': return 'yellow';
     case 'Completed': return 'green';
     default: return 'gray';
   }
