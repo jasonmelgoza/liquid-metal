@@ -250,8 +250,7 @@ export default function Projects() {
               px="6" 
               py="4" 
               borderTop="1px solid" 
-              borderColor="gray.200"
-              bg="gray.50"
+              borderColor="border"
             >
               <Text fontSize="sm" color="gray.600">
                 Showing {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1}-{Math.min(

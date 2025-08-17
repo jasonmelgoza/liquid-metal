@@ -51,7 +51,7 @@ export default function Layout() {
 
       {/* Main Content */}
       <Box display="flex" flexDirection="column" w="full" bg="bg.subtle" overflow="auto">
-        <Box display="flex" bg="bg" borderBottomWidth="1px" borderColor="border" h="20">
+        <Box display="flex" borderBottomWidth="1px" borderColor="border" h="20">
           <Flex align="center" justify="space-between" px="4.5" py="6" w="full">
             <Flex align="center" gap="4">
               {isCollapsed && (
