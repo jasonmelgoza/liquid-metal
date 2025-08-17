@@ -15,7 +15,7 @@ export function DashboardTitleBar({
   upcomingDeadlines = 8,
 }: DashboardTitleBarProps) {
   return (
-    <Flex align="center" justify="space-between" px={5} py={4} w="full">
+    <Flex align="center" justify="space-between" px={3} py={4} w="full">
       <Box>
         <Flex align="center" gap={1.5} fontWeight="semibold" fontSize="20px">
           <Text as="span">Welcome back,</Text>
