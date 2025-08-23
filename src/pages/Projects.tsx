@@ -5,6 +5,7 @@ import {
   Button, 
   Icon, 
   Text,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { 
   createColumnHelper,
@@ -46,6 +47,9 @@ const getStatusColor = (status: string) => {
 };
 
 export default function Projects() {
+  // Modal state management
+  const { open, onOpen, onClose } = useDisclosure();
+
   // Create column helper
   const columnHelper = createColumnHelper<Project>();
 
@@ -92,8 +96,13 @@ export default function Projects() {
   ], [columnHelper]);
 
   const handleAddProject = () => {
-    // TODO: Implement add project functionality
-    console.log('Add project clicked');
+    onOpen(); // Open the modal instead of just logging
+  };
+
+  const handleCreateProject = () => {
+    // TODO: Implement project creation logic
+    console.log('Creating project...');
+    onClose();
   };
 
   return (
@@ -149,6 +158,61 @@ export default function Projects() {
           enableSorting={true}
         />
       </Box>
+
+      {/* Create New Project Modal */}
+      {open && (
+        <Box
+          position="fixed"
+          top="0"
+          left="0"
+          right="0"
+          bottom="0"
+          bg="blackAlpha.600"
+          zIndex={1000}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          p={4}
+          onClick={onClose} // Close when clicking overlay
+        >
+          <Box
+            bg="bg"
+            borderRadius="lg"
+            boxShadow="xl"
+            maxW="500px"
+            w="full"
+            maxH="90vh"
+            overflow="auto"
+            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking modal content
+          >
+            {/* Header */}
+            <Box p={6} borderBottomWidth="1px" borderColor="border">
+              <Text fontSize="xl" fontWeight="semibold">
+                Create New Project
+              </Text>
+            </Box>
+
+            {/* Body */}
+            <Box p={6}>
+              <Text color="gray.500">
+                Project creation form will be implemented here. This is placeholder content for now.
+              </Text>
+            </Box>
+
+            {/* Footer */}
+            <Box p={6} borderTopWidth="1px" borderColor="border">
+              <Flex gap={3} justify="flex-end">
+                <Button variant="ghost" onClick={onClose}>
+                  Cancel
+                </Button>
+                <Button colorScheme="blue" onClick={handleCreateProject}>
+                  Create
+                </Button>
+              </Flex>
+            </Box>
+          </Box>
+        </Box>
+      )}
     </Box>
   );
 }
