@@ -5,6 +5,11 @@ import {
   Button, 
   Icon, 
   Text,
+  Input,
+  Field,
+  Portal,
+  useDisclosure,
+  Dialog,
 } from '@chakra-ui/react';
 import { 
   createColumnHelper,
@@ -46,6 +51,8 @@ const getStatusColor = (status: string) => {
 };
 
 export default function Projects() {
+  const { open, onOpen, onClose } = useDisclosure();
+  
   // Create column helper
   const columnHelper = createColumnHelper<Project>();
 
@@ -91,9 +98,10 @@ export default function Projects() {
     }),
   ], [columnHelper]);
 
-  const handleAddProject = () => {
-    // TODO: Implement add project functionality
-    console.log('Add project clicked');
+  const handleCreateProject = () => {
+    // TODO: Implement create project functionality
+    console.log('Create project clicked');
+    onClose();
   };
 
   return (
@@ -142,13 +150,43 @@ export default function Projects() {
           emptyStateTitle="No projects found"
           emptyStateDescription="You don't have any projects yet."
           addItemLabel="New project"
-          onAddItem={handleAddProject}
+          onAddItem={onOpen}
           showAddItemRow={true}
           pageSize={10}
           showPagination={true}
           enableSorting={true}
         />
       </Box>
+
+      {/* New Project Dialog */}
+      <Dialog.Root open={open} onOpenChange={({ open }) => open ? onOpen() : onClose()}>
+        <Portal>
+          <Dialog.Backdrop />
+          <Dialog.Positioner>
+            <Dialog.Content>
+              <Dialog.Header>
+                <Dialog.Title>Create New Project</Dialog.Title>
+              </Dialog.Header>
+              
+              <Dialog.Body>
+                <Field.Root>
+                  <Field.Label>Project Name</Field.Label>
+                  <Input placeholder="Enter project name..." />
+                </Field.Root>
+              </Dialog.Body>
+              
+              <Dialog.Footer>
+                <Button variant="ghost" onClick={onClose}>
+                  Cancel
+                </Button>
+                <Button colorScheme="blue" onClick={handleCreateProject}>
+                  Create
+                </Button>
+              </Dialog.Footer>
+            </Dialog.Content>
+          </Dialog.Positioner>
+        </Portal>
+      </Dialog.Root>
     </Box>
   );
 }
